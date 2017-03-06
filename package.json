@@ -1,0 +1,23 @@
+{
+  "name": "reader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iggyjoaquin/reader.git"
+  },
+  "author": "Ignacio Streuly",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iggyjoaquin/reader/issues"
+  },
+  "homepage": "https://github.com/iggyjoaquin/reader#readme",
+  "devDependencies": {
+    "browser-sync": "^2.18.8",
+    "gulp": "^3.9.1"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "manifest_version": 2,
+
+  "name": "OS Notes Helper",
+  "description": "Extension applies formatting and added functionality to a monolithic HTML page that has all lecture notes for a semester of Operating Systems at NYU.",
+  "version": "0.1",
+
+  "content_scripts": [
+	{
+	  "matches": ["http://cs.nyu.edu/courses/spring17/CSCI-UA.0202-001/class-notes.html"],
+	  "css": ["content_script/css/main.css"],
+	  "js": ["bower_components/jquery/dist/jquery.min.js", "content_script/js/main.js"]
+	}
+  ],
+  "content_security_policy": "script-src 'self' https://cdn.firebase.com https://*.firebaseio.com; object-src 'self'",
+  "permissions" : ["management", "tabs", "identity", "identity.email"]
+}
