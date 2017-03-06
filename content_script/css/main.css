@@ -10,7 +10,11 @@ h1 {
 }
 
 .appended-section {
-    padding: 100px;
-    margin-top: 100px;
-    background-color: blue;
+    border: 1px solid red;
+    margin-top:10px;
+}
+
+.appended-lecture {
+    border: 1px solid blue;
+    margin: 40px;
 }

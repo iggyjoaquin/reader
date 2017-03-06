@@ -1,5 +1,81 @@
 "use strict";
 
+function wrapLectureSubSections(body) {
+    let newSections = document.getElementsByClassName('appended-section');
+    let modifyLectures = 0;
+
+    for (let i=0; i<newSections.length; i++) {
+        // in this section, lets find the lecture blocks
+
+        let lectures = {};
+        let lectureLines = [];
+        let lectureCounter = 0;
+
+        let sectionElements = $(newSections[i]).children();
+        let inLecture = false;
+
+        for (let prop in $(sectionElements)) {
+            if ($(sectionElements).hasOwnProperty(prop)) {
+
+                let propClass = $($(sectionElements)[prop]).attr('class');
+                let nextPropClass = null;
+
+                if (parseInt(prop) + 1 < $(sectionElements).length) {
+                    nextPropClass = $($(sectionElements)[parseInt(prop) + 1]).attr('class');
+                }
+
+                if (propClass === 'startLecture' && !inLecture) {
+                    //we have a start point
+                    lectures[lectureCounter] = {};
+                    lectures[lectureCounter].start = prop;
+                    lectures[lectureCounter].ele = $(sectionElements)[prop].textContent;
+                    inLecture = true;
+                    lectureLines.push($(sectionElements)[prop]);
+
+                    let ele = $($(sectionElements)[prop]);
+                    $("<div id='appendedLecture" + modifyLectures + "' class='appended-lecture'></div>").insertBefore(ele);
+                    continue;
+                }
+
+                if (inLecture && nextPropClass !== null && nextPropClass === 'startLecture') {
+                    //we've reached the end of a lecture
+                    lectureLines.push($(sectionElements)[prop]);
+                    lectures[lectureCounter].end = prop;
+                    inLecture = false;
+                    lectureCounter++;
+                    addLectureLinesToNewLectureDiv(lectureLines, modifyLectures);
+                    lectureLines = []
+                    // increment global count for id's
+                    modifyLectures++;
+                    continue;
+                }
+
+                //check the last iteration
+                if (parseInt(prop) === $(sectionElements).length - 1 && inLecture) {
+                    // last element in section
+                    // we now close our last lecture 'section'
+                    lectureLines.push($(sectionElements)[prop]);
+                    lectures[lectureCounter].end = prop;
+
+                    addLectureLinesToNewLectureDiv(lectureLines, modifyLectures);
+                    lectureLines = []
+                    inLecture = false;
+                    modifyLectures++;
+                    // loop ends
+                }
+
+                if (inLecture) {
+                    lectureLines.push($(sectionElements)[prop]);
+                    continue;
+                }
+            }
+        }
+
+
+
+    }
+}
+
 function wrapSections() {
     let body = $(document.body).children();
     let startedSection = false;
@@ -14,7 +90,6 @@ function wrapSections() {
 
             if (tag === 'H1') {
                 if (!startedSection) {
-                    console.log(prop, '->',$(body)[prop]);
                     sections[sectionCounter] = {};
                     sections[sectionCounter].start = prop;
                     startedSection = true;
@@ -68,8 +143,19 @@ function wrapSections() {
             }
         }
     }
+
+    // done wrapping sections
+    // proceeed to wrap lectures
+    wrapLectureSubSections(body);
 }
 
+function addLectureLinesToNewLectureDiv(lectureLines, id) {
+    for (let i=0; i<lectureLines.length; i++) {
+        $('#appendedLecture' + id).append($(lectureLines[i]));
+    }
+}
+
+//helper function to push contnet to new section div
 function addSectionLinesToNewDiv(sectionLines, id) {
     for (let i=0; i< sectionLines.length; i++) {
         $('#appendedSection' + id).append($(sectionLines[i]));
