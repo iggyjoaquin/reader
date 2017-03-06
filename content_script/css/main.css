@@ -18,3 +18,10 @@ h1 {
     border: 1px solid blue;
     margin: 40px;
 }
+
+.click-handler-lecture{
+    width: 100%;
+    border-radius: 0px;
+    height: 50px;
+    background-color: #C0C0FF;
+}

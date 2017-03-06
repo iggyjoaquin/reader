@@ -30,10 +30,13 @@ function wrapLectureSubSections(body) {
                     lectures[lectureCounter].start = prop;
                     lectures[lectureCounter].ele = $(sectionElements)[prop].textContent;
                     inLecture = true;
-                    lectureLines.push($(sectionElements)[prop]);
 
+                    let btnTxt = ($(sectionElements)[prop].textContent);
                     let ele = $($(sectionElements)[prop]);
-                    $("<div id='appendedLecture" + modifyLectures + "' class='appended-lecture'></div>").insertBefore(ele);
+
+                    $("<div id='appendedLecture" + modifyLectures + "' class='appended-lecture'></div>").insertAfter(ele);
+                    $("#appendedLecture" + modifyLectures).before('<button class="click-handler-lecture">'+ btnTxt +'</button>')
+                    ele.hide();
                     continue;
                 }
 
@@ -148,6 +151,12 @@ function wrapSections() {
     // proceeed to wrap lectures
     wrapLectureSubSections(body);
 }
+
+
+
+$('body').on('click', '.click-handler-lecture', (event) => {
+    $(event.target).next().slideToggle()
+});
 
 function addLectureLinesToNewLectureDiv(lectureLines, id) {
     for (let i=0; i<lectureLines.length; i++) {
