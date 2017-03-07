@@ -12,6 +12,9 @@
 	  "js": ["bower_components/jquery/dist/jquery.min.js", "content_script/js/main.js"]
 	}
   ],
+  "web_accessible_resources": [
+    "fonts/*.*"
+  ],
   "content_security_policy": "script-src 'self' https://cdn.firebase.com https://*.firebaseio.com; object-src 'self'",
   "permissions" : ["management", "tabs", "identity", "identity.email"]
 }

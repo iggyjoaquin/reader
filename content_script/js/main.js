@@ -74,8 +74,20 @@ function wrapLectureSubSections(body) {
             }
         }
 
+    }
 
+    collapseLecturesandChapters();
+}
 
+function collapseLecturesandChapters() {
+    let allLectureSections = document.getElementsByClassName('click-handler-lecture');
+    for (let i=0; i<allLectureSections.length; i++) {
+        $(allLectureSections[i]).click();
+    }
+
+    let allChapters = document.getElementsByClassName('appended-section-header-click-handler');
+    for (let i=0; i<allChapters.length; i++) {
+        $(allChapters[i]).click();
     }
 }
 
@@ -127,9 +139,16 @@ function wrapSections() {
             if (section.start == prop) {
                 inSection = true;
 
+                let headerTxt = ($(body)[prop].textContent);
                 let ele = $($(body)[prop]);
                 //wrap it
                 $("<div id='appendedSection" + modifySections + "' class='appended-section'></div>").insertBefore(ele);
+
+                $("#appendedSection" + modifySections).before('<h1 class="appended-section-header">'+ headerTxt +'</h1>' +
+                                                                '<button class="appended-section-header-click-handler">Hide/Show Chapter</button>'
+                );
+                ele.hide();
+
                 sectionLines.push($(body)[prop]);
             }
 
@@ -155,7 +174,11 @@ function wrapSections() {
 
 
 $('body').on('click', '.click-handler-lecture', (event) => {
-    $(event.target).next().slideToggle()
+    $(event.target).next().slideToggle();
+});
+
+$('body').on('click', '.appended-section-header-click-handler', (event) => {
+    $(event.target).next().slideToggle();
 });
 
 function addLectureLinesToNewLectureDiv(lectureLines, id) {
@@ -171,4 +194,17 @@ function addSectionLinesToNewDiv(sectionLines, id) {
     }
 }
 
+
+function UIFixes() {
+    $.fn.extend({
+        toggleText: function(a, b){
+            return this.text(this.text() == b ? a : b);
+        }
+    });
+    $('.startLecture').first().hide();
+    $('head').append('<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">');
+}
+
+
+UIFixes();
 wrapSections();
