@@ -1,5 +1,13 @@
 "use strict";
 
+// TODO: (Features)
+// * Top highlight
+// * Definition list
+// * Bookmark
+// Just make a widget in Vue that allows you to do all of this jQuery is unamangeable
+
+let borderColors = ['#BBDEFB', '#D14E5D', '#FFD54F', '#6F83BA'];
+
 function wrapLectureSubSections(body) {
     let newSections = document.getElementsByClassName('appended-section');
     let modifyLectures = 0;
@@ -144,9 +152,12 @@ function wrapSections() {
                 //wrap it
                 $("<div id='appendedSection" + modifySections + "' class='appended-section'></div>").insertBefore(ele);
 
-                $("#appendedSection" + modifySections).before('<h1 class="appended-section-header">'+ headerTxt +'</h1>' +
+                $("#appendedSection" + modifySections).before('<h1 id="sectionHeader' + modifySections + '" class="appended-section-header">'+ headerTxt +'</h1>' +
                                                                 '<button class="appended-section-header-click-handler">Hide/Show Chapter</button>'
                 );
+
+                let color = borderColors[modifySections % (borderColors.length )]
+                $("#sectionHeader" + modifySections).css('border-left', '10px solid ' + color);
                 ele.hide();
 
                 sectionLines.push($(body)[prop]);
@@ -201,6 +212,19 @@ function UIFixes() {
             return this.text(this.text() == b ? a : b);
         }
     });
+
+    $('.heading').hide();
+
+    let newClassHeader = '<div id="newClassHeader"> ' +
+        '<p class="new-class-header">CSCI-UA.202 Operating Systems</p>' +
+        '<p class="new-class-sub-header">Spring 2017</p>' +
+        '<p class="new-class-sub-header">Allan Gottlieb</p>' +
+        '<p class="new-class-sub-header">TuTh: 3:30pm – 4:45pm</p>' +
+        '<p class="new-class-sub-header">Room 109 CIWW</p>' +
+        '<hr class="new-header-hr">' +
+    '</div>';
+
+    $('body').prepend(newClassHeader);
     $('.startLecture').first().hide();
     $('head').append('<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">');
 }
