@@ -236,6 +236,7 @@ function createWidget() {
     let widget = '<div id="helperWidget">' +
             '<div id="definitionListButton" class="widget-button"> <i class="fa fa-book widget-button-icon"></i></div>'+
             '<div id="highlightsButton" class="widget-button"><i class="fa fa-underline widget-button-icon"></i></div>'+
+            '<a href="https://github.com/iggyjoaquin/reader/issues" target="_blank"><div id="supportButton" class="widget-button"><i class="fa fa-heart widget-button-icon"></i></div></a>'+
         '</div>';
 
     let widgetHandler = '<i id="widgetHandler" class="fa fa-pencil"></o>';
