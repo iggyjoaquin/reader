@@ -1,12 +1,19 @@
 "use strict";
 
-// TODO: (Features)
+// TODO: (Widget Features)
 // * Top highlight
 // * Definition list
-// * Bookmark
-// Just make a widget in Vue that allows you to do all of this jQuery is unamangeable
+// * Bookmark, scroll to
 
-let borderColors = ['#BBDEFB', '#D14E5D', '#FFD54F', '#6F83BA'];
+// let borderColors = ['#BBDEFB', '#D14E5D', '#FFD54F', '#6F83BA'];
+let borderColors = ['#434343'];
+$('head').append('<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />');
+
+$.fn.extend({
+    toggleText: function(a, b){
+        return this.text(this.text() == b ? a : b);
+    }
+});
 
 function wrapLectureSubSections(body) {
     let newSections = document.getElementsByClassName('appended-section');
@@ -97,6 +104,9 @@ function collapseLecturesandChapters() {
     for (let i=0; i<allChapters.length; i++) {
         $(allChapters[i]).click();
     }
+
+    //Done with formatting
+    showContent();
 }
 
 function wrapSections() {
@@ -153,7 +163,7 @@ function wrapSections() {
                 $("<div id='appendedSection" + modifySections + "' class='appended-section'></div>").insertBefore(ele);
 
                 $("#appendedSection" + modifySections).before('<h1 id="sectionHeader' + modifySections + '" class="appended-section-header">'+ headerTxt +'</h1>' +
-                                                                '<button class="appended-section-header-click-handler">Hide/Show Chapter</button>'
+                                                                '<button class="appended-section-header-click-handler">Show/Hide Chapter</button>'
                 );
 
                 let color = borderColors[modifySections % (borderColors.length )]
@@ -192,6 +202,16 @@ $('body').on('click', '.appended-section-header-click-handler', (event) => {
     $(event.target).next().slideToggle();
 });
 
+$('body').on('click', '#widgetHandler', (event) => {
+    $('#helperWidget').toggle(400);
+});
+
+//widget click handlers
+$('body').on('click', '#definitionListButton', (event) => {
+    console.log(event.target);
+});
+
+
 function addLectureLinesToNewLectureDiv(lectureLines, id) {
     for (let i=0; i<lectureLines.length; i++) {
         $('#appendedLecture' + id).append($(lectureLines[i]));
@@ -205,14 +225,28 @@ function addSectionLinesToNewDiv(sectionLines, id) {
     }
 }
 
+function showContent() {
+    $('body').fadeIn();
+    //init widget
+    // TODO : uncomment
+    // createWidget();
+}
+
+function createWidget() {
+    let widget = '<div id="helperWidget">' +
+            '<div id="definitionListButton" class="widget-button"> <i class="fa fa-book widget-button-icon"></i></div>'+
+            '<div id="highlightsButton" class="widget-button"><i class="fa fa-underline widget-button-icon"></i></div>'+
+        '</div>';
+
+    let widgetHandler = '<i id="widgetHandler" class="fa fa-pencil"></o>';
+
+    $('body').prepend(widget);
+    $('#helperWidget').hide();
+    $('body').prepend(widgetHandler);
+
+}
 
 function UIFixes() {
-    $.fn.extend({
-        toggleText: function(a, b){
-            return this.text(this.text() == b ? a : b);
-        }
-    });
-
     $('.heading').hide();
 
     let newClassHeader = '<div id="newClassHeader"> ' +
@@ -230,5 +264,7 @@ function UIFixes() {
 }
 
 
+// TODO: Comment out
+createWidget();
 UIFixes();
 wrapSections();

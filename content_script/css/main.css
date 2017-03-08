@@ -17,20 +17,67 @@ h2, h3 {
 }
 
 body {
+    /*For fade in*/
+    /* TODO: Uncomment */
+    /*display: none;*/
+
     padding-left: 20px;
     padding-right: : 20px;
 }
 
+#helperWidget {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    width: 50px;
+    border-radius:10px;
+    border: 1px solid #9A9A9A;
+    opacity: 0.8;
+    background-color: #303030;
+}
+
+#widgetHandler {
+    position: fixed;
+    cursor: pointer;
+    top:10px;
+    right: 10px;
+}
+
+.widget-button {
+    cursor: pointer;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    margin-top:11px;
+    margin-bottom:11px;
+    margin-left: 9px;
+    background: #fff;
+}
+
+.widget-button-icon {
+    margin-left: 8px;
+    margin-top:7px;
+    color: #fff;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+}
+
+#definitionListButton {
+    background-color: #D14E5D;
+}
+
+#highlightsButton {
+    background-color: #BBDEFB;
+}
 
 h1 {
     margin-top:30px;
     padding-left: 10px !important;
-    padding-top: 10px;
-    padding-bottom: 5px;
+    padding-top: 5px;
+    padding-bottom: 10px;
     padding-top: 10px;
     height: 40px;
-    border-bottom: 10px solid #FFF !important;
-    border-top: 10px solid #FFF !important;
+    /*border-bottom: 10px solid #FFF !important;*/
+    /*border-top: 10px solid #FFF !important;*/
     font-family: 'A' !important;
     font-size: 22px;
     text-align: left !important;
@@ -81,10 +128,10 @@ h1 {
     margin-top:-60px;
     margin-right: 20px;
     border-radius: 0px;
-    height: 35px;
-    background-color: #6999E1;
+    height: 25px;
+    background-color: #8CA0E1;
     color: #FFF;
-    border: 2px solid #6B8EC2;
+    border: 2px solid #7287CE;
     border-radius:3px;
     outline: none;
     font-size: 13px;
